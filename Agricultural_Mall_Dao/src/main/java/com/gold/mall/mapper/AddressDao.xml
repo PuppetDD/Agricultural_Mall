@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--设置dao接口-->
+<mapper namespace="com.gold.mall.dao.AddressDao">
+
+    <sql id="AddressColumn">
+        id,
+        customer_id,
+        receiver_name,
+        receiver_phone,
+        receiver_mobile,
+        receiver_city,
+        receiver_province,
+        receiver_district,
+        zip_code,
+        create_time,
+        update_time,
+        status,
+        address_detail
+    </sql>
+
+    <select id="selectAddressByCustomerIdAndAddressId" resultType="Address">
+        select
+        <include refid="AddressColumn"/>
+        from a_address
+        where id = #{addressId} and customer_id = #{customerId}
+    </select>
+
+    <select id="selectAllAddress" resultType="Address">
+        select
+        <include refid="AddressColumn"/>
+        from a_address
+        where customer_id = #{customerId} and status = #{status}
+    </select>
+
+    <insert id="insertAddress" parameterType="Address" useGeneratedKeys="true"
+            keyProperty="id" keyColumn="id">
+        insert into a_address
+        (customer_id, receiver_name, receiver_phone, receiver_mobile, receiver_city, receiver_province,
+         receiver_district, zip_code, create_time, update_time, status, address_detail)
+        values (#{customerId}, #{receiverName}, #{receiverPhone}, #{receiverMobile}, #{receiverCity},
+                #{receiverProvince}, #{receiverDistrict}, #{zipCode}, #{createTime}, #{updateTime}, #{status},
+                #{addressDetail})
+    </insert>
+
+    <update id="deleteAddressByIdAndCustomerId">
+        update a_address
+        set status      = #{status},
+            update_time = #{updateTime}
+        where id = #{addressId}
+          and customer_id = #{customerId}
+    </update>
+
+    <update id="updateByAddress" parameterType="Address">
+        update a_address
+        set receiver_name     = #{receiverName},
+            receiver_phone    = #{receiverPhone},
+            receiver_mobile   = #{receiverMobile},
+            receiver_Province = #{receiverProvince},
+            receiver_city     = #{receiverCity},
+            receiver_district = #{receiverDistrict},
+            address_detail    = #{addressDetail},
+            zip_code          = #{zipCode},
+            update_time       = #{updateTime}
+        where id = #{id}
+          and customer_id = #{customerId}
+    </update>
+
+</mapper>

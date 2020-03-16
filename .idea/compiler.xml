@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Agricultural_Mall_Backstage" />
+        <module name="Agricultural_Mall_common" />
+        <module name="Agricultural_Mall_Dao" />
+        <module name="Agricultural_Mall_Pojo" />
+        <module name="Agricultural_Mall_Reception" />
+        <module name="Agricultural_Mall_Service" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>

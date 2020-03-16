@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--设置dao接口-->
+<mapper namespace="com.gold.mall.dao.OrderDao">
+
+    <sql id="OrderColumn">
+        id,
+        order_number,
+        customer_id,
+        price,
+        create_date,
+        product_number,
+        status,
+        address
+    </sql>
+
+    <resultMap id="OrderMap" type="Order">
+        <id property="id" column="id"/>
+        <result property="price" column="price"/>
+        <result property="createDate" column="create_date"/>
+        <result property="status" column="status"/>
+        <result property="address" column="address"/>
+        <result property="orderNumber" column="order_number"/>
+        <result property="productNumber" column="product_number"/>
+        <association property="customer" javaType="Customer" column="customer_id">
+            <id property="id" column="customer_id"/>
+            <result property="name" column="name"/>
+        </association>
+    </resultMap>
+
+    <select id="selectAllOrders" resultMap="OrderMap">
+        select
+        <include refid="OrderColumn"/>
+        from a_order
+        order by create_date desc
+    </select>
+
+    <select id="selectOrderById" resultMap="OrderMap">
+        select
+        <include refid="OrderColumn"/>
+        from a_order
+        where id = #{id}
+    </select>
+
+    <select id="selectAllOrderByCustomerId" resultMap="OrderMap">
+        select o.id, o.order_number, o.price, o.create_date, o.address, o.product_number, o.status
+        from a_order o
+                 left join a_customer c on o.customer_id = c.id
+        where o.customer_id = #{customerId}
+          and o.status != 5
+        order by o.create_date desc
+    </select>
+
+    <select id="selectOrdersByCustomerId" resultMap="OrderMap">
+        select o.id, o.order_number, o.price, o.create_date, o.address, o.product_number, o.status
+        from a_order o
+                 left join a_customer c on o.customer_id = c.id
+        where o.customer_id = #{customerId}
+          and o.status = #{status}
+        order by o.create_date desc
+    </select>
+
+    <select id="selectOrderIdByOrderNoAndCustomerId" resultMap="OrderMap">
+        select o.id,
+               o.order_number,
+               o.price,
+               o.create_date,
+               o.address,
+               o.product_number,
+               o.status,
+               c.id 'c.id',
+               c.name
+        from a_order o
+                 left join a_customer c ON o.customer_id = c.id
+        where order_number = #{orderNo}
+          and customer_id = #{customerId}
+          and o.status != 5
+        order by o.create_date desc
+    </select>
+
+    <select id="selectOrdersByParams" parameterType="com.gold.mall.params.OrderParam" resultMap="OrderMap">
+        select
+        <include refid="OrderColumn"/>
+        from a_order
+        <where>
+            <if test="orderNumber != null and orderNumber != ''">
+                and order_number like concat(concat('%',#{orderNumber}),'%')
+            </if>
+            <if test="customerId != null and customerId != ''">
+                and customer_id like concat(concat('%',#{customerId}),'%')
+            </if>
+            <if test="status != null and status != -1">
+                and status = #{status}
+            </if>
+        </where>
+
+    </select>
+
+    <select id="selectOrderByOutTradeNo" resultMap="OrderMap">
+        select o.id,
+               o.order_number,
+               o.price,
+               o.create_date,
+               o.address,
+               o.product_number,
+               o.status,
+               c.id 'c.id',
+               c.name
+        from a_order o
+                 left join a_customer c ON o.customer_id = c.id
+        where order_number = #{outTradeNo}
+        order by o.create_date desc
+    </select>
+
+    <insert id="insertOrder" parameterType="Order" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into a_order
+        (order_number, customer_id, price, create_date, product_number, status, address)
+        values (#{orderNumber}, #{customer.id}, #{price}, #{createDate}, #{productNumber}, #{status}, #{address})
+    </insert>
+
+    <update id="updateOrder" parameterType="Order">
+        update a_order
+        set status  = #{status},
+            address = #{address}
+        where id = #{id}
+    </update>
+
+    <update id="updateOrderStatusByCustomerIdAndOrderNo">
+        update a_order
+        set status = #{status}
+        where order_number = #{orderNumber}
+          and customer_id = #{customerId}
+    </update>
+
+    <update id="updateOrderStatusByCustomerIdAndOrderId">
+        update a_order
+        set status = #{status}
+        where id = #{orderId}
+          and customer_id = #{customerId}
+    </update>
+
+    <update id="updateOrderStatusByOrderNo">
+        update a_order
+        set status = #{status}
+        where order_number = #{orderNumber}
+    </update>
+
+    <delete id="deleteOrderById">
+        delete
+        from a_order
+        where id = #{id}
+    </delete>
+
+</mapper>
