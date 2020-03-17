@@ -88,7 +88,7 @@
                             regexp: {
                                 //商品价格校验的正则表达式
                                 regexp: /(^[1-9]\d*(\.\d{1,2})?$)|(^0(\.\d{1,2})?$)/,
-                                message: '商品价格不正确'
+                                message: '商品价格格式不正确'
                             }
                         }
                     },
@@ -96,6 +96,18 @@
                         validators: {
                             notEmpty: {
                                 message: '请选择商品的图片'
+                            }
+                        }
+                    },
+                    stock: {
+                        validators: {
+                            notEmpty: {
+                                message: '商品库存不能为空'
+                            },
+                            regexp: {
+                                //商品价格校验的正则表达式
+                                regexp: /^\+?[1-9][0-9]*$/,
+                                message: '商品库存格式不正确'
                             }
                         }
                     },
@@ -135,14 +147,19 @@
                             regexp: {
                                 //商品价格校验的正则表达式
                                 regexp: /(^[1-9]\d*(\.\d{1,2})?$)|(^0(\.\d{1,2})?$)/,
-                                message: '商品价格不正确'
+                                message: '商品价格格式不正确'
                             }
                         }
                     },
-                    file: {
+                    stock: {
                         validators: {
                             notEmpty: {
-                                message: '请选择商品的图片'
+                                message: '商品库存不能为空'
+                            },
+                            regexp: {
+                                //商品库存校验的正则表达式
+                                regexp: /^\+?[1-9][0-9]*$/,
+                                message: '商品库存格式不正确'
                             }
                         }
                     },
@@ -240,6 +257,7 @@
                         $('#pro-num').val(result.data.id);
                         $('#pro-name').val(result.data.name);
                         $('#pro-price').val(result.data.price);
+                        $('#pro-stock').val(result.data.stock);
                         $('#info').val(result.data.info);
                         $('#pro-TypeId').val(result.data.productType.id);
                         $('#img2').attr('src', result.data.image);
@@ -307,7 +325,7 @@
                     <th class="text-center">商品</th>
                     <th class="text-center">价格</th>
                     <th class="text-center">产品类型</th>
-                    <th class="text-center">状态</th>
+                    <th class="text-center">库存</th>
                     <th class="text-center">操作</th>
                 </tr>
                 </thead>
@@ -318,10 +336,7 @@
                         <td>${product.name}</td>
                         <td>${product.price}</td>
                         <td>${product.productType.name}</td>
-                        <td>
-                            <c:if test="${product.productType.status == 1}">有效商品</c:if>
-                            <c:if test="${product.productType.status == 0}">无效商品</c:if>
-                        </td>
+                        <td>${product.stock}</td>
                         <td class="text-center">
                             <input type="button" class="btn btn-warning btn-sm doProModify" value="修改"
                                    onclick="showProduct(${product.id})">
@@ -373,6 +388,12 @@
                                 <a href="javascript:;" class="file">选择文件
                                     <input type="file" name="file" id="product-image">
                                 </a>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-stock" class="col-sm-4 control-label">商品库存：</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="product-stock" name="stock">
                             </div>
                         </div>
                         <div class="form-group">
@@ -452,6 +473,12 @@
                                 <a class="file">
                                     选择文件 <input type="file" name="file" id="pro-image">
                                 </a>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pro-stock" class="col-sm-4 control-label">商品库存：</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" id="pro-stock" name="stock">
                             </div>
                         </div>
                         <div class="form-group">

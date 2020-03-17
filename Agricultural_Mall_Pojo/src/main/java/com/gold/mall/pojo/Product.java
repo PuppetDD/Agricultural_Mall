@@ -27,6 +27,10 @@ public class Product {
      */
     private Double price;
     /**
+     * 库存
+     */
+    private Integer stock;
+    /**
      * 商品简介
      */
     private String info;

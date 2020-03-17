@@ -5,7 +5,6 @@ import com.github.pagehelper.PageInfo;
 import com.gold.mall.backstage.vo.ProductVo;
 import com.gold.mall.common.constant.PaginationConstant;
 import com.gold.mall.common.utils.ResponseResult;
-import com.gold.mall.common.utils.SolrUtil;
 import com.gold.mall.dto.ProductDto;
 import com.gold.mall.pojo.Product;
 import com.gold.mall.pojo.ProductType;

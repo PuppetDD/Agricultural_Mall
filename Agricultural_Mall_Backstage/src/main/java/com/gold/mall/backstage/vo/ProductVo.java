@@ -28,6 +28,10 @@ public class ProductVo {
      */
     private Double price;
     /**
+     * 库存
+     */
+    private Integer stock;
+    /**
      * 上传的图片
      */
     private CommonsMultipartFile file;

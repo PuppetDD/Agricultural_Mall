@@ -180,22 +180,26 @@ public class ProductServiceImpl implements ProductService {
         //    throw new FileUploadException("文件上传失败"+e.getMessage());
         //}
 
-        String timePath = new SimpleDateFormat("yyyyMMdd").format(new Date());
-        String filePath = path + "/" + timePath;
-        String fileName = StringUtil.reFileName(productDto.getFileName());
+        String imagePath = null;
+        if (!productDto.getFileName().isEmpty()) {
+            String timePath = new SimpleDateFormat("yyyyMMdd").format(new Date());
+            String filePath = path + "/" + timePath;
+            String fileName = StringUtil.reFileName(productDto.getFileName());
 
-        boolean flag = FtpUtils.uploadFile(host, port, username, password, basePath, filePath, fileName, productDto.getInputStream());
+            boolean flag = FtpUtils.uploadFile(host, port, username, password, basePath, filePath, fileName, productDto.getInputStream());
 
-        if (!flag) {
-            throw new FileUploadException("文件上传失败");
+            if (!flag) {
+                throw new FileUploadException("文件上传失败");
+            } else {
+                imagePath = baseUrl + "/" + timePath + "/" + fileName;
+            }
         }
-
         //2.保存到数据库,将 dto 转化为 pojo
         Product product = new Product();
         BeanUtils.copyProperties(productDto, product);
         //product.setImage(filePath);
         //https://120.77.212.201/images/20190301512474268.jpg
-        product.setImage(baseUrl + "/" + timePath + "/" + fileName);
+        product.setImage(imagePath);
 
         ProductType productType = new ProductType();
         productType.setId(productDto.getProductTypeId());

@@ -21,12 +21,16 @@
 
         $(function () {
             var t = $('#text_box');
+            var stock = '${product.stock}'
             $('#min').attr('disabled', true);
 
             $('#add').click(function () {
                 t.val(parseInt(t.val()) + 1);
                 if (parseInt(t.val()) != 1) {
                     $('#min').attr('disabled', false);
+                }
+                if (parseInt(t.val()) == parseInt(stock)) {
+                    $('#add').attr('disabled', true);
                 }
             });
 
@@ -35,7 +39,9 @@
                 if (parseInt(t.val()) == 1) {
                     $('#min').attr('disabled', true);
                 }
-
+                if (parseInt(t.val()) < parseInt(stock)) {
+                    $('#add').attr('disabled', false);
+                }
             });
             //调整footer 的位置
             autoFooterHeight();
@@ -168,7 +174,7 @@
                 <input type="button" id="min" name="min" value="-" disabled="disabled">
                 <input class="textBox" id="text_box" name="textBox" type="text" value="1">
                 <input id="add" name="add" type="button" value="+">
-                <span class="Hgt">库存（有）</span>
+                <span class="Hgt">&nbsp;&nbsp;库存:${product.stock}</span>
             </div>
 
             <div class="shop">

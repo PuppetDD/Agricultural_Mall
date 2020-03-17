@@ -286,8 +286,6 @@
                         <td class="text-center">
                             <input type="button" class="btn btn-warning btn-sm doProTypeModify"
                                    onclick="showProductType(${productType.id})" value="修改">
-                            <input type="button" class="btn btn-danger btn-sm doProTypeDelete"
-                                   onclick="showDeleteModal(${productType.id})" value="删除">
                             <c:if test="${productType.status == 1}">
                                 <input type="button" class="btn btn-danger btn-sm doProTypeDisable" value="禁用"
                                        onclick="modifyStatus(${productType.id},this)">
@@ -296,6 +294,8 @@
                                 <input type="button" class="btn btn-success btn-sm doProTypeDisable" value="启用"
                                        onclick="modifyStatus(${productType.id},this)">
                             </c:if>
+                            <input type="button" class="btn btn-danger btn-sm doProTypeDelete"
+                                   onclick="showDeleteModal(${productType.id})" value="删除">
                         </td>
                     </tr>
                 </c:forEach>

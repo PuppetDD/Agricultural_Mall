@@ -9,6 +9,7 @@
         <id property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="price" column="price"/>
+        <result property="stock" column="stock"/>
         <result property="info" column="info"/>
         <result property="image" column="image"/>
         <association property="productType" javaType="ProductType" column="product_type_id">
@@ -21,6 +22,7 @@
         <id property="id" column="id"/>
         <result property="name" column="name"/>
         <result property="price" column="price"/>
+        <result property="stock" column="stock"/>
         <result property="info" column="info"/>
         <result property="image" column="image"/>
         <association property="productType" javaType="ProductType" column="product_type_id">
@@ -34,6 +36,7 @@
         id,
         name,
         price,
+        stock,
         info,
         image,
         product_type_id
@@ -58,6 +61,7 @@
                p.name,
                p.info,
                p.price,
+               p.stock,
                p.image,
                p.product_type_id,
                pt.id   'pt.id',
@@ -96,17 +100,20 @@
 
     <insert id="insertProduct" parameterType="Product">
         insert into a_product
-            (name, price, info, image, product_type_id)
-        values (#{name}, #{price}, #{info}, #{image}, #{productType.id})
+            (name, price, stock, info, image, product_type_id)
+        values (#{name}, #{price}, #{stock}, #{info}, #{image}, #{productType.id})
     </insert>
 
     <update id="updateProduct" parameterType="Product">
         update a_product
-        set name            = #{name},
-            price           = #{price},
-            info            = #{info},
-            image           = #{image},
-            product_type_id = #{productType.id}
+        set name = #{name},
+        price = #{price},
+        stock = #{stock},
+        info = #{info},
+        <if test="image != null">
+            image = #{image},
+        </if>
+        product_type_id = #{productType.id}
         where id = #{id}
     </update>
 

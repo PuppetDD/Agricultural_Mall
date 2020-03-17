@@ -1,6 +1,5 @@
 package com.gold.mall.common.utils;
 
-import com.gold.mall.common.constant.PaginationConstant;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;

@@ -33,6 +33,11 @@ public class ProductSolrDto {
     @Field("p_price")
     private Double price;
     /**
+     * 商品价格
+     */
+    @Field("p_stock")
+    private Integer stock;
+    /**
      * 商品类型的id
      */
     @Field("pt_id")
@@ -52,6 +57,7 @@ public class ProductSolrDto {
         id = String.valueOf(product.getId());
         name = product.getName();
         price = product.getPrice();
+        stock = product.getStock();
         info = product.getInfo();
         image = product.getImage();
         productTypeId = product.getProductType().getId();
@@ -61,6 +67,7 @@ public class ProductSolrDto {
         product.setId(Integer.valueOf(this.id));
         product.setName(this.name);
         product.setPrice(this.price);
+        product.setStock(this.stock);
         product.setInfo(this.info);
         product.setImage(this.image);
         ProductType productType = new ProductType();

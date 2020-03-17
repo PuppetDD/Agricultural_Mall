@@ -29,6 +29,10 @@ public class ProductDto {
      */
     private Double price;
     /**
+     * 库存
+     */
+    private Integer stock;
+    /**
      * 商品类型的id
      */
     private Integer productTypeId;
