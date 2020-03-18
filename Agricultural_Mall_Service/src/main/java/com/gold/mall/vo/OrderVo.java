@@ -1,13 +1,11 @@
 package com.gold.mall.vo;
 
-import com.gold.mall.pojo.Customer;
 import com.gold.mall.pojo.Order;
 import com.gold.mall.pojo.OrderItem;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
 import java.util.List;
 
 /**
