@@ -24,7 +24,7 @@ public class SolrUtil {
     private static String url;
 
     static {
-        url = "http://127.0.0.1:8080/solr/a_product";
+        url = "http://120.77.212.201:8080/solr/a_product";
         client = new HttpSolrClient.Builder(url).build();
     }
 
