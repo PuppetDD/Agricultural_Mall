@@ -114,7 +114,6 @@
                         }, function () {
                             //删除成功，重新加载页面数据
                             if (${pageInfo.size > 1}) {
-                                console.log('${pageInfo}');
                                 location.href = '${pageContext.request.contextPath}/admin/order/getAllOrders?pageNum=' +${pageInfo.pageNum};
                             } else {
                                 location.href = '${pageContext.request.contextPath}/admin/order/getAllOrders';
